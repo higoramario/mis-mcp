@@ -1,6 +1,8 @@
 package br.usp.each.inss.executor;
 
+import java.io.BufferedWriter;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Deque;
@@ -93,6 +95,13 @@ public class SimpleSimulator implements Simulator {
 		fileOut.close();
 	}
 
+	@Override
+	public void exportTestInformation(String outputFile, String message) throws IOException {
+		BufferedWriter fl = new BufferedWriter(new FileWriter(outputFile));
+		fl.write(message);
+		fl.close();
+	}
+	
 	@Override
 	public Requirements requirements() {
 		return requirements;

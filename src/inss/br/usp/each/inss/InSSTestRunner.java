@@ -12,10 +12,10 @@ import org.junit.runner.notification.RunListener;
 
 import br.usp.each.inss.bytecode.InSSProbe;
 import br.usp.each.inss.executor.SimulatorMethodCallPair;
-import br.usp.each.inss.executor.SimulatorMethodCallPairThread;
+import br.usp.each.inss.executor.SimulatorMethodCallPair;
 import br.usp.each.inss.executor.SimulatorMethodCallPrintStack;
 import br.usp.each.inss.executor.SimulatorMethodCallTriple;
-import br.usp.each.inss.executor.SimulatorMethodCallTripleThread;
+import br.usp.each.inss.executor.SimulatorMethodCallTriple;
 
 public class InSSTestRunner  {
 
@@ -48,50 +48,32 @@ public class InSSTestRunner  {
 				if(InSSProbe.simulator() instanceof br.usp.each.inss.executor.SimulatorMethodCallPair){//HIGOR
 					SimulatorMethodCallPair simMetCallPair = (SimulatorMethodCallPair) InSSProbe.simulator();//HIGOR
 					simMetCallPair.methodCallRequirements().setFailed(true);
-					fail = "F";//HIGOR
 				}//HIGOR
 				else if(InSSProbe.simulator() instanceof br.usp.each.inss.executor.SimulatorMethodCallTriple){
 					SimulatorMethodCallTriple simMetCallTriple = (SimulatorMethodCallTriple) InSSProbe.simulator();//HIGOR
 					simMetCallTriple.methodCallRequirements().setFailed(true);
-					fail = "F";//HIGOR
 				}
-				else if(InSSProbe.simulator() instanceof br.usp.each.inss.executor.SimulatorMethodCallPairThread){//HIGOR
-					SimulatorMethodCallPairThread simMetCallPair = (SimulatorMethodCallPairThread) InSSProbe.simulator();//HIGOR
-					simMetCallPair.methodCallRequirements().setFailed(true);
-					fail = "F";//HIGOR
-				}//HIGOR
-				else if(InSSProbe.simulator() instanceof br.usp.each.inss.executor.SimulatorMethodCallTripleThread){//HIGOR
-					SimulatorMethodCallTripleThread simMetCallTriple = (SimulatorMethodCallTripleThread) InSSProbe.simulator();//HIGOR
-					simMetCallTriple.methodCallRequirements().setFailed(true);
-					fail = "F";//HIGOR
-				}//HIGOR
 				else{//HIGOR
 					InSSProbe.simulator().requirements().setFailed(true);
-					fail = "F";//HIGOR
 				}//HIGOR
+				fail = "F";//HIGOR
 			}
 			String reqType=setRequirementType();//HIGOR
 			InSSProbe.simulator().exportRequirements(description.getClassName() + "." + description.getMethodName()+"_"+fail+"."+reqType);
-
+			
 			if(InSSProbe.simulator() instanceof br.usp.each.inss.executor.SimulatorMethodCallPair){//HIGOR
 				SimulatorMethodCallPair simMetCallPair = (SimulatorMethodCallPair) InSSProbe.simulator();//HIGOR
-				simMetCallPair.methodCallRequirements().reset();//HIGOR
+				//simMetCallPair.methodCallRequirements().reset();//HIGOR
+				simMetCallPair.reset();
 			}
 			else if(InSSProbe.simulator() instanceof br.usp.each.inss.executor.SimulatorMethodCallTriple){//HIGOR
 				SimulatorMethodCallTriple simMetCallTriple = (SimulatorMethodCallTriple) InSSProbe.simulator();//HIGOR
-				simMetCallTriple.methodCallRequirements().reset();//HIGOR
+				//simMetCallTriple.methodCallRequirements().reset();//HIGOR
+				simMetCallTriple.reset();
 			}
 			else if(InSSProbe.simulator() instanceof br.usp.each.inss.executor.SimulatorMethodCallPrintStack){//HIGOR
 				SimulatorMethodCallPrintStack simMetCallPrintStack = (SimulatorMethodCallPrintStack) InSSProbe.simulator();//HIGOR
 				simMetCallPrintStack.reset();//HIGOR
-			}
-			else if(InSSProbe.simulator() instanceof br.usp.each.inss.executor.SimulatorMethodCallPairThread){//HIGOR
-				SimulatorMethodCallPairThread simMetCallPairThread = (SimulatorMethodCallPairThread) InSSProbe.simulator();//HIGOR
-				simMetCallPairThread.reset();//HIGOR
-			}
-			else if(InSSProbe.simulator() instanceof br.usp.each.inss.executor.SimulatorMethodCallTripleThread){//HIGOR
-				SimulatorMethodCallTripleThread simMetCallTripleThread = (SimulatorMethodCallTripleThread) InSSProbe.simulator();//HIGOR
-				simMetCallTripleThread.reset();//HIGOR
 			}
 			else{
 				InSSProbe.simulator().requirements().reset();
@@ -101,21 +83,22 @@ public class InSSTestRunner  {
 		@Override
 		public void testRunFinished(Result result) throws Exception {
 			//super.testRunFinished(result);
+			Failure failure;
+			String fileName,message;
 			Iterator<Failure> itFailure = result.getFailures().iterator();
 			while(itFailure.hasNext())
 			{
-				System.out.println(itFailure.next().getMessage());
+				failure = itFailure.next();
+				System.out.println(failure.getDescription().getClassName() + "." + failure.getDescription().getMethodName() + "." + setRequirementType()+"-out");
+				fileName = failure.getDescription().getClassName() + "." + failure.getDescription().getMethodName() + "." + setRequirementType()+"-out";
+				message = failure.getMessage() + "\n" + failure.getDescription() + "\n" + failure.getTrace() + "\n" + failure.getException();
+				InSSProbe.simulator().exportTestInformation(fileName,message);
 			}
 		}
 
 		@Override
 		public void testStarted(Description description)
-		{
-			/*if(InSSProbe.simulator() instanceof br.usp.each.inss.executor.SimulatorMethodCallPrintStack){//HIGOR
-				SimulatorMethodCallPrintStack simMetCallPrintStack = (SimulatorMethodCallPrintStack) InSSProbe.simulator();//HIGOR
-				simMetCallPrintStack.reset();//HIGOR
-			}*/
-		}
+		{}
 
 		//Include a type of extension in name of output coverage files
 		public String setRequirementType()
@@ -127,6 +110,9 @@ public class InSSTestRunner  {
 			}
 			else if(simulator.contains("br.usp.each.inss.executor.SimulatorMethodCallTriple")){
 				return "mct";
+			}
+			else if(simulator.contains("br.usp.each.inss.executor.SimulatorMethodCallPrintStack")){
+				return "stack";
 			}
 			else{
 				String strategy = System.getProperty("instrumentation.strategy");
@@ -149,7 +135,7 @@ public class InSSTestRunner  {
 					return "dua-bdc8";
 				}
 				if(strategy.contains("br.usp.each.inss.instrumentation.CorrectedDemandDriven")){
-					return "dua-cdd";
+					return "dua";
 				}
 				if(strategy.contains("br.usp.each.inss.instrumentation.CorrectedDemandDrivenCloneModified")){
 					return "dua-cddcm";
@@ -169,7 +155,6 @@ public class InSSTestRunner  {
 			}
 			return "none";
 		}
-
 	}
 
 }

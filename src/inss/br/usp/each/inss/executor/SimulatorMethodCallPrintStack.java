@@ -68,12 +68,6 @@ public class SimulatorMethodCallPrintStack implements Simulator {
 			p = new Program(invoke, graph);
 			stack.addFirst(p);
 
-/*			if(!listThread.contains(thread))
-			{
-				listThread.add(thread);
-			}
-*/			
-			
 			if(!mapStack.containsKey(thread.getId()))
 			{
 				stackPrint = new ArrayList<String>();
@@ -153,10 +147,17 @@ public class SimulatorMethodCallPrintStack implements Simulator {
 				fl.write("\n");
 			}
 		}
-
 		fl.close();
 	}
 
+	@Override
+	public void exportTestInformation(String outputFile, String message) throws IOException {
+		BufferedWriter fl = new BufferedWriter(new FileWriter(outputFile));
+		fl.write(message);
+		fl.close();
+	}
+
+	
 	@Override
 	public Requirements requirements() {
 		return requirements;
@@ -193,7 +194,6 @@ public class SimulatorMethodCallPrintStack implements Simulator {
 		String signature = formatSignature(method.getSignature());
 
 		return method.getName()+signature;
-
 	}
 
 	//Adjust the signature of methods

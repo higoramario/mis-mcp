@@ -105,4 +105,11 @@ public class CloneSimulator implements Simulator {
 		return requirements;
 	}
 
+	@Override
+	public void exportTestInformation(String outputFile, String message)
+			throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

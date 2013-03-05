@@ -10,6 +10,8 @@ public interface Simulator {
 
 	void exportRequirements(String outputFile) throws IOException;
 	
+	void exportTestInformation(String outputFile, String message) throws IOException;
+	
 	Requirements requirements();
 
 }
