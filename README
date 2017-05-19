@@ -1,0 +1,40 @@
+InSS - Instrumentation Strategies Simulator
+
+This version contains strategies to run MethodCallPair and MethodCallTriple
+
+===============================================================================
+
+Installing on *unix and mac:
+
+1: Run the Ant script (build.xml) to build the project.
+   ant dist
+   
+2: After that, the 'build' folder will contain all projects compiled
+   j2gxl, inss, opal, mis
+   
+   the 'mis' folder contains all necessary files. 
+   Copy 'mis' to your preferred directory (e.g., /home/user/apps)
+
+3: create an enviroment variable for the 'mis' folder
+   export INSS_HOME=/home/user/apps/mis
+   
+4: give execution permissions for the files in the 'bin' folder
+   chmod +x instrumenter alluses defuse requirements allusesextractor
+
+5: you can add the 'bin' folder in the system PATH to ease the script's use
+
+
+Installing on Windows:
+
+Steps 1 and 2 are the same.
+
+3: Click on Windows + Pause buttons
+
+4: Choose 'Environment Variables' on the 'Advanced' tab
+   
+5: Click on 'user variables' and then on 'New...'
+   Set a name and the directory you chose for the 'mis' folder
+     Variable Name: INSS_HOME
+     Variable Value: C:\apps\mis
+
+6: you can add the 'bin' folder in the system PATH to ease the script's use
