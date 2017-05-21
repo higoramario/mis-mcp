@@ -16,10 +16,10 @@ Installing on *unix and mac:
    Copy 'mis' to your preferred directory (e.g., /home/user/apps)
 
 3: create an enviroment variable for the 'mis' folder
-   export INSS_HOME=/home/user/apps/mis
+   export INSS_HOME=/home/user/apps/mis-mcp/build/mis
    
 4: give execution permissions for the files in the 'bin' folder
-   chmod +x instrumenter alluses defuse requirements allusesextractor
+   chmod +x INSS_HOME/bin/*
 
 5: you can add the 'bin' folder in the system PATH to ease the script's use
 
