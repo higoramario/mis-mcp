@@ -35,6 +35,6 @@ Steps 1 and 2 are the same.
 5: Click on 'user variables' and then on 'New...'
    Set a name and the directory you chose for the 'mis' folder
      Variable Name: MIS_HOME
-     Variable Value: C:\apps\mis
+     Variable Value: C:\apps\mis-mcp\build\mis
 
 6: you can add the 'bin' folder in the system PATH to ease the script's use
