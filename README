@@ -16,10 +16,10 @@ Installing on *unix and mac:
    Copy 'mis' to your preferred directory (e.g., /home/user/apps)
 
 3: create an enviroment variable for the 'mis' folder
-   export MIS_HOME=/home/user/apps/mis-mcp/build/mis
+   export INSS_HOME=/home/user/apps/mis-mcp/build/mis
    
 4: give execution permissions for the files in the 'bin' folder
-   chmod +x MIS_HOME/bin/*
+   chmod +x INSS_HOME/bin/*
 
 5: you can add the 'bin' folder in the system PATH to ease the script's use
 
@@ -34,7 +34,7 @@ Steps 1 and 2 are the same.
    
 5: Click on 'user variables' and then on 'New...'
    Set a name and the directory you chose for the 'mis' folder
-     Variable Name: MIS_HOME
+     Variable Name: INSS_HOME
      Variable Value: C:\apps\mis-mcp\build\mis
 
 6: you can add the 'bin' folder in the system PATH to ease the script's use
